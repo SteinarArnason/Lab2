@@ -25,5 +25,10 @@ namespace API.Models
 		/// </summary>
 		public DateTime StartDate { get; set; }
 
+		/// <summary>
+		/// Number of students in the course
+		/// </summary>
+		public int StudentCount { get; set; }
+
 	}
 }

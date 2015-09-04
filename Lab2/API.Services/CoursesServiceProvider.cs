@@ -1,14 +1,19 @@
 ﻿using API.Models;
-using System;
+using API.Services.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace API.Services
 {
 	public class CoursesServiceProvider
 	{
+		private readonly AppDataContext _db;
+
+		public CoursesServiceProvider()
+		{
+			_db = new AppDataContext();
+		}
+
 		/// <summary>
 		/// Gets all the courses on a selected semester
 		/// </summary>
@@ -22,7 +27,17 @@ namespace API.Services
 			}
 
 			//TODO finna alla áfanga sem tilheyra þessarri önn
-			return null;
+			//var result = _db.Courses.Where(x => x.Semester == semester).toList(); jafngilt næstu skipun
+			var result = (from c in _db.Courses
+						  where c.Semester == semester
+						  select new CourseDTO
+						  {
+							  ID = c.ID,
+							  StartDate = c.StartDate,
+							 //Name = c.Name,
+						 }).ToList();
+
+			return result;
 		}
 	}
 }
