@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Courses\Students\AddStudentViewModel.cs" />
     <Compile Include="CourseDetailsDTO.cs" />
     <Compile Include="CourseDTO.cs" />
     <Compile Include="CourseViewModel.cs" />

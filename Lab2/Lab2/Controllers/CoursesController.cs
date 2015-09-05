@@ -2,6 +2,9 @@
 using API.Services;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Net;
+using System.Web.Http.Description;
+using API.Models.Courses.Students;
 
 namespace Lab2.Controllers
 {
@@ -33,6 +36,21 @@ namespace Lab2.Controllers
 			return _service.GetCoursesBySemester(semester);
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="model"></param>
+		/// <returns></returns>
+		[HttpPost]
+		[Route("{id}/students")]
+		[ResponseType(typeof(StudentDTO))] 
+		public IHttpActionResult AddStudentToCourse(int id, AddStudentViewModel model)
+		{
+			var result = _service.AddStudentToCourse(id, model);
+
+			return Content(HttpStatusCode.Created, result);
+		}
 
 
 	}

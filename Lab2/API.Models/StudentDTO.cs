@@ -9,7 +9,7 @@ namespace API.Models
 	/// <summary>
 	/// Represents a student in a list of students
 	/// </summary>
-	class StudentDTO
+	public class StudentDTO
 	{
 		/// <summary>
 		/// Name of the student
