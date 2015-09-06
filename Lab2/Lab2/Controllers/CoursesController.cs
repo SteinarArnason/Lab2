@@ -7,6 +7,7 @@ using System.Net;
 using System.Web.Http.Description;
 using API.Models.Courses.Students;
 using API.Services.Exceptions;
+using API.Models.Courses;
 
 namespace Lab2.Controllers
 {
@@ -39,11 +40,11 @@ namespace Lab2.Controllers
 		}
 		
 		/// <summary>
-		/// 
+		/// Adds a student to a given course, if it fails it returns 412
 		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="model"></param>
-		/// <returns></returns>
+		/// <param name="id">Course ID</param>
+		/// <param name="model">Student we're adding to the course</param>
+		/// <returns>Created(201)</returns>
 		[HttpPost]
 		[Route("{id}/students")]
 		[ResponseType(typeof(StudentDTO))] 
@@ -67,6 +68,12 @@ namespace Lab2.Controllers
 			}
 		}
 
+		/// <summary>
+		/// Gets a given course by its' ID returning a more detailed object
+		/// about the course, if no course found returns 404
+		/// </summary>
+		/// <param name="id">ID of the course</param>
+		/// <returns>The course we asked for</returns>
 		[HttpGet]
 		[Route("{id}")]
 		public IHttpActionResult GetCourseByID(int id)
@@ -79,6 +86,35 @@ namespace Lab2.Controllers
 			catch (AppObjectNotFoundException)
 			{
 				return NotFound();
+			}
+		}
+
+		/// <summary>
+		/// Adds a student to a given course, if it fails it returns 412
+		/// </summary>
+		/// <param name="id">Course ID</param>
+		/// <param name="model">Student we're adding to the course</param>
+		/// <returns>Created(201)</returns>
+		[HttpPut]
+		[Route("{id}")]
+		[ResponseType(typeof(StudentDTO))]
+		public IHttpActionResult UpdateCourseByID(int id, UpdateCourseViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					var result = _service.UpdateCourseByID(id, model);
+					return Content(HttpStatusCode.OK, result);
+				}
+				catch (AppObjectNotFoundException)
+				{
+					return NotFound();
+				}
+			}
+			else
+			{
+				return StatusCode(HttpStatusCode.PreconditionFailed);
 			}
 		}
 
