@@ -104,8 +104,10 @@ namespace Lab2.Controllers
 			{
 				try
 				{
-					var result = _service.UpdateCourseByID(id, model);
-					return Content(HttpStatusCode.OK, result);
+					//var result = _service.UpdateCourseByID(id, model);
+					//return Content(HttpStatusCode.OK, result);
+					_service.UpdateCourseByID(id, model);
+					return Ok();
 				}
 				catch (AppObjectNotFoundException)
 				{
@@ -115,6 +117,26 @@ namespace Lab2.Controllers
 			else
 			{
 				return StatusCode(HttpStatusCode.PreconditionFailed);
+			}
+		}
+
+		/// <summary>
+		/// Deleted the given course, if no course found returns 404
+		/// </summary>
+		/// <param name="id">id of the course to be deleted</param>
+		/// <returns>NoContent(204)</returns>
+		[HttpDelete]
+		[Route("{id}")]
+		public IHttpActionResult DeleteCourseByID(int id)
+		{
+			try
+			{
+				var result = _service.DeleteCourseByID(id);
+				return Content(HttpStatusCode.NoContent, result);
+			}
+			catch (AppObjectNotFoundException)
+			{
+				return NotFound();
 			}
 		}
 
