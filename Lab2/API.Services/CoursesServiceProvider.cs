@@ -74,26 +74,21 @@ namespace API.Services
 		#region Get Course by ID
 		public CourseDetailsDTO GetCourseByID(int ID)
 		{
-			var result = (from c in _db.Courses
-						 join ct in _db.CourseTemplates on c.TemplateID equals ct.TemplateID
-						 where c.ID == ID
-						 select new CourseDetailsDTO
-						 {
-							 ID = c.ID,
-							 Name = ct.Name,
-							 StartDate = c.StartDate,
-							 EndDate = c.EndDate,
-							 Semester = c.Semester,
-							 StudentCount = 0
-						  });
-
+			var result = _db.Courses.SingleOrDefault(x => x.ID == ID);
 			if(result == null)
 			{
 				throw new AppObjectNotFoundException();
 			}
 			else
 			{
-				return result;
+				CourseDetailsDTO c = new CourseDetailsDTO();
+				c.ID = result.ID;
+				c.Name = _db.CourseTemplates.SingleOrDefault(x => x.TemplateID == result.TemplateID).Name;
+				c.StartDate = result.StartDate;
+				c.EndDate = result.EndDate;
+				c.StudentCount = 0;
+				c.Semester = result.Semester;
+				return c;
 			}
 		}
 		#endregion
