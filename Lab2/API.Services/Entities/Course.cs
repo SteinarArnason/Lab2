@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 namespace API.Services.Entities
 {
 	/// <summary>
-	/// Database class
+	/// A course
 	/// </summary>
-	[Table("Courses")]
 	class Course
 	{
 		/// <summary>

@@ -5,7 +5,7 @@ namespace API.Models.Courses
 {
 
 	/// <summary>
-	/// Updates the start and update of the course
+	/// Updates the startdate and enddate of the course
 	/// </summary>
 	public class UpdateCourseViewModel
 	{

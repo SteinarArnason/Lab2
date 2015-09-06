@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace API.Services.Repositories
 {
+	/// <summary>
+	/// Database tables
+	/// </summary>
 	class AppDataContext : DbContext
 	{
 		public DbSet<Course>         Courses         { get; set; }

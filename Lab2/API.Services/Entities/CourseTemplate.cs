@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace API.Services.Entities
 {
+	/// <summary>
+	/// Course templateID and Name
+	/// </summary>
 	class CourseTemplate
 	{
 		/// <summary>
