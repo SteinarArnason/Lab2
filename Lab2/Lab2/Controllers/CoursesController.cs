@@ -127,7 +127,7 @@ namespace Lab2.Controllers
 		}
 
 		/// <summary>
-		/// Deleted the given course, if no course found returns 404
+		/// Deletes the given course, if no course found returns 404
 		/// </summary>
 		/// <param name="id">id of the course to be deleted</param>
 		/// <returns>NoContent(204)</returns>
@@ -147,7 +147,7 @@ namespace Lab2.Controllers
 		}
 
 		/// <summary>
-		/// Gets all the students from the course, returns 404 if none found
+		/// Gets all the students from the course, if no course found returns 404
 		/// </summary>
 		/// <param name="id">id of the course we want to get students from</param>
 		/// <returns>A list of students</returns>
