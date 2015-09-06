@@ -500,11 +500,27 @@
         </member>
         <member name="M:Lab2.Controllers.CoursesController.AddStudentToCourse(System.Int32,API.Models.Courses.Students.AddStudentViewModel)">
             <summary>
-            
+            Adds a student to a given course, if it fails it returns 412
             </summary>
-            <param name="id"></param>
-            <param name="model"></param>
-            <returns></returns>
+            <param name="id">Course ID</param>
+            <param name="model">Student we're adding to the course</param>
+            <returns>Created(201)</returns>
+        </member>
+        <member name="M:Lab2.Controllers.CoursesController.GetCourseByID(System.Int32)">
+            <summary>
+            Gets a given course by its' ID returning a more detailed object
+            about the course, if no course found returns 404
+            </summary>
+            <param name="id">ID of the course</param>
+            <returns>The course we asked for</returns>
+        </member>
+        <member name="M:Lab2.Controllers.CoursesController.UpdateCourseByID(System.Int32,API.Models.Courses.UpdateCourseViewModel)">
+            <summary>
+            Adds a student to a given course, if it fails it returns 412
+            </summary>
+            <param name="id">Course ID</param>
+            <param name="model">Student we're adding to the course</param>
+            <returns>Created(201)</returns>
         </member>
         <member name="T:Lab2.Models.CourseRegistration">
             <summary>

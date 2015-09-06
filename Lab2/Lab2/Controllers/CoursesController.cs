@@ -90,11 +90,11 @@ namespace Lab2.Controllers
 		}
 
 		/// <summary>
-		/// Adds a student to a given course, if it fails it returns 412
+		/// Updates a course, if no course found returns 404
 		/// </summary>
 		/// <param name="id">Course ID</param>
-		/// <param name="model">Student we're adding to the course</param>
-		/// <returns>Created(201)</returns>
+		/// <param name="model">Updated values for the course</param>
+		/// <returns>200</returns>
 		[HttpPut]
 		[Route("{id}")]
 		[ResponseType(typeof(StudentDTO))]
