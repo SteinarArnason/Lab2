@@ -1,10 +1,12 @@
-﻿using API.Models;
+﻿using System;
+using API.Models;
 using API.Services;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Net;
 using System.Web.Http.Description;
 using API.Models.Courses.Students;
+using API.Services.Exceptions;
 
 namespace Lab2.Controllers
 {
@@ -47,9 +49,22 @@ namespace Lab2.Controllers
 		[ResponseType(typeof(StudentDTO))] 
 		public IHttpActionResult AddStudentToCourse(int id, AddStudentViewModel model)
 		{
-			var result = _service.AddStudentToCourse(id, model);
-
-			return Content(HttpStatusCode.Created, result);
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					var result = _service.AddStudentToCourse(id, model);
+					return Content(HttpStatusCode.Created, result);
+				}
+				catch (AppObjectNotFoundException)
+				{
+					return NotFound();
+				}
+			}
+			else
+			{
+				return StatusCode(HttpStatusCode.PreconditionFailed);
+			}
 		}
 
 

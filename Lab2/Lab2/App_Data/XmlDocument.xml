@@ -498,6 +498,14 @@
             <param name="semester">specific semester (null is default value)</param>
             <returns>A list of courses</returns>
         </member>
+        <member name="M:Lab2.Controllers.CoursesController.AddStudentToCourse(System.Int32,API.Models.Courses.Students.AddStudentViewModel)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="T:Lab2.Models.CourseRegistration">
             <summary>
             Represents a student enrolled in a specific course

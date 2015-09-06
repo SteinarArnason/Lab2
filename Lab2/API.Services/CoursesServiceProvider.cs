@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using API.Models.Courses.Students;
 using System;
+using API.Services.Exceptions;
 
 namespace API.Services
 {
@@ -44,8 +45,25 @@ namespace API.Services
 			return result;
 		}
 
+		/// <summary>
+		/// Adding Student to course
+		/// </summary>
+		/// <param name="id">Id of the course</param>
+		/// <param name="model">SSN and Name</param>
+		/// <returns></returns>
 		public StudentDTO AddStudentToCourse(int id, AddStudentViewModel model)
 		{
+
+			var course = _db.Courses.SingleOrDefault(x => x.ID == id);
+			if (course == null)
+			{
+				// if course cannot be found
+				throw new AppObjectNotFoundException();
+			}
+			// TODO: Validate that the person exists
+			//var person = _db.
+			// Actually add the record!
+
 			return null;
 		}
 	}

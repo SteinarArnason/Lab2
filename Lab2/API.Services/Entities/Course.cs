@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace API.Services.Entities
 		/// Identifies the template for the course
 		/// Example: "T-514-VEFT"
 		/// </summary>
+		[Required]
 		public string TemplateID { get; set; }
 
 		/// <summary>
@@ -43,6 +45,7 @@ namespace API.Services.Entities
 		/// Example: "20152" stands for 2015 summer
 		/// Example: "20151" stands for 2015 fall
 		/// </summary>
+		[Required]
 		public string Semester { get; set; }
 	}
 }

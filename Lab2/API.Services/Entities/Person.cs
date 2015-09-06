@@ -7,22 +7,24 @@ using System.Threading.Tasks;
 
 namespace API.Services.Entities
 {
-	class CourseTemplate
+	/// <summary>
+	/// Person that is in the school
+	/// Person must exist so that we can assign it to a course
+	/// </summary>
+	class Person
 	{
 		/// <summary>
-		/// Unique identifier
+		/// Unique Identifyer
 		/// </summary>
 		public int ID { get; set; }
 		/// <summary>
-		/// Identifies the template for the course
-		/// Example: "T-514-VEFT"
+		/// Social Security Number
+		/// Example: "1508932409
 		/// </summary>
-		[Required]
-		public string TemplateID { get; set; }
-
+		public string SSN { get; set; }
 		/// <summary>
-		/// Name of class
-		/// Example: "Vefþjónustur"
+		/// Name of a person
+		/// Example: "Kristinn Júlíusson"
 		/// </summary>
 		[Required]
 		public string Name { get; set; }
