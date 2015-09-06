@@ -146,6 +146,11 @@ namespace Lab2.Controllers
 			}
 		}
 
+		/// <summary>
+		/// Gets all the students from the course, returns 404 if none found
+		/// </summary>
+		/// <param name="id">id of the course we want to get students from</param>
+		/// <returns>A list of students</returns>
 		[HttpGet]
 		[Route("{id}/students")]
 		public IHttpActionResult GetStudentsInCourse(int id)
