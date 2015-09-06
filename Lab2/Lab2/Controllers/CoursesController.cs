@@ -67,6 +67,21 @@ namespace Lab2.Controllers
 			}
 		}
 
+		[HttpGet]
+		[Route("{id}")]
+		public IHttpActionResult GetCourseByID(int id)
+		{
+			try
+			{
+				var result = _service.GetCourseByID(id);
+				return Content(HttpStatusCode.OK, result);
+			}
+			catch (AppObjectNotFoundException)
+			{
+				return NotFound();
+			}
+		}
+
 
 	}
 }

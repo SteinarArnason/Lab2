@@ -17,6 +17,7 @@ namespace API.Services
 			_db = new AppDataContext();
 		}
 
+		#region Get Courses by semester
 		/// <summary>
 		/// Gets all the courses on a selected semester
 		/// </summary>
@@ -44,7 +45,9 @@ namespace API.Services
 
 			return result;
 		}
+		#endregion
 
+		#region Add Student to course
 		/// <summary>
 		/// Adding Student to course
 		/// </summary>
@@ -66,5 +69,33 @@ namespace API.Services
 
 			return null;
 		}
+		#endregion
+
+		#region Get Course by ID
+		public CourseDetailsDTO GetCourseByID(int ID)
+		{
+			var result = (from c in _db.Courses
+						 join ct in _db.CourseTemplates on c.TemplateID equals ct.TemplateID
+						 where c.ID == ID
+						 select new CourseDetailsDTO
+						 {
+							 ID = c.ID,
+							 Name = ct.Name,
+							 StartDate = c.StartDate,
+							 EndDate = c.EndDate,
+							 Semester = c.Semester,
+							 StudentCount = 0
+						  });
+
+			if(result == null)
+			{
+				throw new AppObjectNotFoundException();
+			}
+			else
+			{
+				return result;
+			}
+		}
+		#endregion
 	}
 }
