@@ -157,7 +157,7 @@ namespace API.Services
 			}
 			var res = (from c in _db.CourseStudents
 					   join p in _db.Persons on c.PersonID equals p.ID
-				       where c.ID == id
+				       where c.CourseID == id
 				       select new StudentDTO
 				       {
 						     Name  = p.Name,
