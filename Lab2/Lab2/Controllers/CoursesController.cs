@@ -148,9 +148,17 @@ namespace Lab2.Controllers
 
 		[HttpGet]
 		[Route("{id}/students")]
-		public List<StudentDTO> GetStudentsInCourse(int id)
+		public IHttpActionResult GetStudentsInCourse(int id)
 		{
-			return _service.GetStudentsInCourse(id);
+			try
+			{
+				return Ok(_service.GetStudentsInCourse(id));
+			}
+			catch (AppObjectNotFoundException)
+			{
+				return NotFound();
+
+			}
 		}
 
 
