@@ -123,7 +123,15 @@ namespace API.Services
 			{
 				throw new AppObjectNotFoundException();
 			}
+
 			//TODO: eyða öllum students ur course student töflunni sem að eru i þessum course
+			var courseStudents = _db.CourseStudents.AsEnumerable().Where(x => x.CourseID == result.ID);
+
+			foreach (var row in courseStudents)
+			{
+				_db.CourseStudents.Remove(row);
+			}
+
 			_db.Courses.Remove(result);
 			_db.SaveChanges();
 

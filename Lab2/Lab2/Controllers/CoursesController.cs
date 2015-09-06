@@ -142,6 +142,13 @@ namespace Lab2.Controllers
 			}
 		}
 
+		[HttpGet]
+		[Route("{id}/students")]
+		public List<StudentDTO> GetStudentsInCourse(int id)
+		{
+			return _service.GetStudentsInCourse(id);
+		}
+
 
 	}
 }
