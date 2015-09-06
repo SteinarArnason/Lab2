@@ -2,6 +2,9 @@
 
 namespace API.Models.Courses.Students
 {
+	/// <summary>
+	/// Adds a student to a course
+	/// </summary>
 	public class AddStudentViewModel
 	{
 		[Required]

@@ -49,15 +49,14 @@ namespace Lab2.Controllers
 		/// <returns>Created(201)</returns>
 		[HttpPost]
 		[Route("{id}/students")]
-		[ResponseType(typeof(StudentDTO))] 
 		public IHttpActionResult AddStudentToCourse(int id, AddStudentViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
 				try
 				{
-					var result = _service.AddStudentToCourse(id, model);
-					return Content(HttpStatusCode.Created, result);
+					_service.AddStudentToCourse(id, model);
+					return StatusCode(HttpStatusCode.Created);
 				}
 				catch (AppObjectNotFoundException)
 				{
