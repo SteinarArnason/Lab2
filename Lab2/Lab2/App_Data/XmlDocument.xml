@@ -522,6 +522,13 @@
             <param name="model">Updated values for the course</param>
             <returns>200</returns>
         </member>
+        <member name="M:Lab2.Controllers.CoursesController.DeleteCourseByID(System.Int32)">
+            <summary>
+            Deleted the given course, if no course found returns 404
+            </summary>
+            <param name="id">id of the course to be deleted</param>
+            <returns>NoContent(204)</returns>
+        </member>
         <member name="T:Lab2.Models.CourseRegistration">
             <summary>
             Represents a student enrolled in a specific course

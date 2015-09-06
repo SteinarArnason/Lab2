@@ -133,8 +133,8 @@ namespace Lab2.Controllers
 		{
 			try
 			{
-				var result = _service.DeleteCourseByID(id);
-				return Content(HttpStatusCode.NoContent, result);
+				_service.DeleteCourseByID(id);
+				return StatusCode(HttpStatusCode.NoContent);
 			}
 			catch (AppObjectNotFoundException)
 			{
