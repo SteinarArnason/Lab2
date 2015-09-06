@@ -115,6 +115,25 @@ namespace API.Services
 		#endregion
 
 		#region Delete Course by id
+
+		public CourseDTO DeleteCourseByID(int id)
+		{
+			var result = _db.Courses.SingleOrDefault(x => x.ID == id);
+			if (result == null)
+			{
+				throw new AppObjectNotFoundException();
+			}
+			var retVal = new CourseDTO();
+			retVal.ID = result.ID;
+			retVal.Name = _db.CourseTemplates.SingleOrDefault(x => x.TemplateID == result.TemplateID).Name;
+			retVal.StartDate = result.StartDate;
+			retVal.StudentCount = 0;
+			//TODO: eyða öllum students ur course student töflunni sem að eru i þessum course
+			_db.Courses.Remove(result);
+			_db.SaveChanges();
+			return retVal;
+
+		}
 		#endregion
 	}
 }

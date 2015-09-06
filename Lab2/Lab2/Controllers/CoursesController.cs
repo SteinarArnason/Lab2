@@ -106,11 +106,8 @@ namespace Lab2.Controllers
 			{
 				try
 				{
-<<<<<<< HEAD
-=======
 					//var result = _service.UpdateCourseByID(id, model);
 					//return Content(HttpStatusCode.OK, result);
->>>>>>> e16153ba4f9ea8be20e09612c22ba8e862fbedb4
 					_service.UpdateCourseByID(id, model);
 					return Ok();
 				}
