@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using API.Models.Courses;
+using API.Services.Entities;
 using API.Services.Exceptions;
 
 namespace API.Services
@@ -67,9 +68,16 @@ namespace API.Services
 				throw new AppObjectNotFoundException();
 			}
 			// TODO: Validate that the person exists
-			//var person = _db.
-			// Actually add the record!
-
+			var person = _db.Persons.SingleOrDefault(x => x.SSN == model.SSN);
+			if (person == null)
+			{
+				throw new AppPersonNotFoundException();
+			}
+			var adding = new CourseStudent();
+			adding.CourseID = course.ID;
+			adding.PersonID = person.ID;
+			_db.CourseStudents.Add(adding);
+			_db.SaveChanges();
 			return null;
 		}
 		#endregion
