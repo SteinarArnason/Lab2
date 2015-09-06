@@ -92,5 +92,8 @@ namespace API.Services
 			}
 		}
 		#endregion
+
+		#region Delete Course by id
+		#endregion
 	}
 }
