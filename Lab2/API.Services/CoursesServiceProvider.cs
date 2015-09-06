@@ -137,5 +137,28 @@ namespace API.Services
 
 		}
 		#endregion
+
+		#region Get all students in course
+
+		public List<StudentDTO> GetStudentsInCourse(int id)
+		{
+			var course = _db.Courses.SingleOrDefault(x => x.ID == id);
+			if (course == null)
+			{
+				throw new AppObjectNotFoundException();
+			}
+			var res = (from c in _db.CourseStudents
+					   join p in _db.Persons on c.PersonID equals p.ID
+				       where c.ID == id
+				       select new StudentDTO
+				       {
+						     Name  = p.Name,
+						     SSN   = p.SSN
+						}).ToList();
+			return res;
+
+		} 
+		#endregion
+
 	}
 }
