@@ -62,6 +62,10 @@ namespace Lab2.Controllers
 				{
 					return NotFound();
 				}
+				catch (AppPersonNotFoundException)
+				{
+					return StatusCode(HttpStatusCode.PreconditionFailed);
+				}
 			}
 			else
 			{
