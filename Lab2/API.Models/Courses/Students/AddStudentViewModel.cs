@@ -7,6 +7,5 @@ namespace API.Models.Courses.Students
 		[Required]
 		public string SSN { get; set; }
 		public string Name { get; set; }
-
 	}
 }
