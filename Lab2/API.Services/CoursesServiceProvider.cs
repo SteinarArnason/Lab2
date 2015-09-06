@@ -57,8 +57,7 @@ namespace API.Services
 		/// </summary>
 		/// <param name="id">Id of the course</param>
 		/// <param name="model">SSN and Name</param>
-		/// <returns></returns>
-		public StudentDTO AddStudentToCourse(int id, AddStudentViewModel model)
+		public void AddStudentToCourse(int id, AddStudentViewModel model)
 		{
 
 			var course = _db.Courses.SingleOrDefault(x => x.ID == id);
@@ -78,7 +77,6 @@ namespace API.Services
 			adding.PersonID = person.ID;
 			_db.CourseStudents.Add(adding);
 			_db.SaveChanges();
-			return null;
 		}
 		#endregion
 
@@ -88,7 +86,7 @@ namespace API.Services
 		/// Throws AppObjectNotFound if course does not exist
 		/// </summary>
 		/// <param name="ID">id of course example 1</param>
-		/// <returns></returns>
+		/// <returns>The coruse in CourseDetailsDTO</returns>
 		public CourseDetailsDTO GetCourseByID(int ID)
 		{
 			var result = _db.Courses.SingleOrDefault(x => x.ID == ID);
@@ -167,7 +165,7 @@ namespace API.Services
 		/// Throws AppObjectNotFound if the course does not exist
 		/// </summary>
 		/// <param name="id">Id of the course you want to get students from</param>
-		/// <returns></returns>
+		/// <returns>A list of all the students in the given course</returns>
 		public List<StudentDTO> GetStudentsInCourse(int id)
 		{
 			var course = _db.Courses.SingleOrDefault(x => x.ID == id);
