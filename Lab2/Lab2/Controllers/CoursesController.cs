@@ -2,6 +2,7 @@
 using API.Models;
 using API.Services;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Web.Http;
 using System.Net;
 using System.Web.Http.Description;
@@ -100,12 +101,13 @@ namespace Lab2.Controllers
 		[ResponseType(typeof(StudentDTO))]
 		public IHttpActionResult UpdateCourseByID(int id, UpdateCourseViewModel model)
 		{
+			Debug.Print("hehe");
 			if (ModelState.IsValid)
 			{
 				try
 				{
-					var result = _service.UpdateCourseByID(id, model);
-					return Content(HttpStatusCode.OK, result);
+					_service.UpdateCourseByID(id, model);
+					return Ok();
 				}
 				catch (AppObjectNotFoundException)
 				{

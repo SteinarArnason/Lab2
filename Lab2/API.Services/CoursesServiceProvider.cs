@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using API.Models.Courses.Students;
 using System;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using API.Models.Courses;
 using API.Services.Exceptions;
@@ -83,7 +84,7 @@ namespace API.Services
 			}
 			else
 			{
-				CourseDetailsDTO c = new CourseDetailsDTO();
+				var c = new CourseDetailsDTO();
 				c.ID = result.ID;
 				c.Name = _db.CourseTemplates.SingleOrDefault(x => x.TemplateID == result.TemplateID).Name;
 				c.StartDate = result.StartDate;
@@ -99,6 +100,7 @@ namespace API.Services
 
 		public void UpdateCourseByID(int id, UpdateCourseViewModel c)
 		{
+			Debug.Print("Inside update course by id factory");
 			var results = _db.Courses.SingleOrDefault(x => x.ID == id);
 			if (results == null)
 			{
