@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using API.Models.Courses.Students;
 using System;
+using System.Security.Cryptography.X509Certificates;
+using API.Models.Courses;
 using API.Services.Exceptions;
 
 namespace API.Services
@@ -91,6 +93,23 @@ namespace API.Services
 				return c;
 			}
 		}
+		#endregion
+
+		#region Update course by id
+
+		public void UpdateCourseByID(int id, UpdateCourseViewModel c)
+		{
+			var results = _db.Courses.SingleOrDefault(x => x.ID == id);
+			if (results == null)
+			{
+				throw new AppObjectNotFoundException();
+			}
+			results.StartDate = c.StartDate;
+			results.EndDate = c.EndDate;
+		
+			_db.SaveChanges();
+		
+		} 
 		#endregion
 
 		#region Delete Course by id
