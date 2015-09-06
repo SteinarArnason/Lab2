@@ -1,5 +1,4 @@
-﻿using System;
-using API.Models;
+﻿using API.Models;
 using API.Services;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -41,7 +40,9 @@ namespace Lab2.Controllers
 		}
 		
 		/// <summary>
-		/// Adds a student to a given course, if it fails it returns 412
+		/// Adds a student to a given course
+		/// If course does not exist it returns 404
+		/// If person does not exist then 412
 		/// </summary>
 		/// <param name="id">Course ID</param>
 		/// <param name="model">Student we're adding to the course</param>

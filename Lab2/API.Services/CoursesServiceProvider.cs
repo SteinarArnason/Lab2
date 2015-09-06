@@ -3,9 +3,7 @@ using API.Services.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using API.Models.Courses.Students;
-using System;
 using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
 using API.Models.Courses;
 using API.Services.Entities;
 using API.Services.Exceptions;
@@ -54,6 +52,8 @@ namespace API.Services
 		#region Add Student to course
 		/// <summary>
 		/// Adding Student to course
+		/// Throws AppObjectNotFound if course does not exist
+		/// Throws AppPersonNotFound if person does not exist
 		/// </summary>
 		/// <param name="id">Id of the course</param>
 		/// <param name="model">SSN and Name</param>
@@ -85,6 +85,7 @@ namespace API.Services
 		#region Get Course by ID
 		/// <summary>
 		/// Get course by id
+		/// Throws AppObjectNotFound if course does not exist
 		/// </summary>
 		/// <param name="ID">id of course example 1</param>
 		/// <returns></returns>
@@ -112,6 +113,7 @@ namespace API.Services
 		#region Update course by id
 		/// <summary>
 		/// Updates course start and end date
+		/// Throws AppObjectNotFound if course does not exist
 		/// </summary>
 		/// <param name="id">Id of course that you want to update</param>
 		/// <param name="c">New Start and end Date</param>
@@ -134,6 +136,7 @@ namespace API.Services
 		#region Delete Course by id
 		/// <summary>
 		/// Deletes course by id
+		/// Throws AppObjectNotFound if course does not exist
 		/// </summary>
 		/// <param name="id">Id of course Example: 1</param>
 		public void DeleteCourseByID(int id)
@@ -161,6 +164,7 @@ namespace API.Services
 		#region Get all students in course
 		/// <summary>
 		/// Gets all student in course
+		/// Throws AppObjectNotFound if the course does not exist
 		/// </summary>
 		/// <param name="id">Id of the course you want to get students from</param>
 		/// <returns></returns>
