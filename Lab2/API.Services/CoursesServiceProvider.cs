@@ -83,6 +83,11 @@ namespace API.Services
 		#endregion
 
 		#region Get Course by ID
+		/// <summary>
+		/// Get course by id
+		/// </summary>
+		/// <param name="ID">id of course example 1</param>
+		/// <returns></returns>
 		public CourseDetailsDTO GetCourseByID(int ID)
 		{
 			var result = _db.Courses.SingleOrDefault(x => x.ID == ID);
@@ -105,7 +110,11 @@ namespace API.Services
 		#endregion
 
 		#region Update course by id
-
+		/// <summary>
+		/// Updates course start and end date
+		/// </summary>
+		/// <param name="id">Id of course that you want to update</param>
+		/// <param name="c">New Start and end Date</param>
 		public void UpdateCourseByID(int id, UpdateCourseViewModel c)
 		{
 			Debug.Print("Inside update course by id factory");
@@ -123,7 +132,10 @@ namespace API.Services
 		#endregion
 
 		#region Delete Course by id
-
+		/// <summary>
+		/// Deletes course by id
+		/// </summary>
+		/// <param name="id">Id of course Example: 1</param>
 		public void DeleteCourseByID(int id)
 		{
 			var result = _db.Courses.SingleOrDefault(x => x.ID == id);
@@ -147,7 +159,11 @@ namespace API.Services
 		#endregion
 
 		#region Get all students in course
-
+		/// <summary>
+		/// Gets all student in course
+		/// </summary>
+		/// <param name="id">Id of the course you want to get students from</param>
+		/// <returns></returns>
 		public List<StudentDTO> GetStudentsInCourse(int id)
 		{
 			var course = _db.Courses.SingleOrDefault(x => x.ID == id);
