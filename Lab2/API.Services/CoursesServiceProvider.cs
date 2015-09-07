@@ -42,9 +42,12 @@ namespace API.Services
 							  ID           = c.ID,
 							  StartDate    = c.StartDate,
 							  Name         = ct.Name,
-							  StudentCount = NumberStudentsCourse(c.ID)
+							  StudentCount = 0
 						 }).ToList();
-
+			foreach (var i in result)
+			{
+				i.StudentCount = NumberStudentsCourse(i.ID);
+			}
 			return result;
 		}
 		#endregion
@@ -226,7 +229,7 @@ namespace API.Services
 		/// 
 		/// </summary>
 		/// <param name="id">Id of the course</param>
-		/// <returns></returns>
+		/// <returns>Returns number of students in course</returns>
 		public int NumberStudentsCourse(int id)
 		{
 			var course = _db.Courses.SingleOrDefault(x => x.ID == id);
@@ -234,8 +237,7 @@ namespace API.Services
 			{
 				throw new AppObjectNotFoundException();
 			}
-			var num = _db.CourseStudents.Where(x => x.Active == 1).Count();
-			return num;
+			return _db.CourseStudents.Count(x => x.CourseID == course.ID);
 		}
 		#endregion
 
@@ -306,6 +308,31 @@ namespace API.Services
 				throw new AppObjectNotFoundException();
 			}
 			var result = (from c in _db.CourseStudents
+						  where c.ID == id
+						  join ct in _db.Persons on c.PersonID equals ct.ID
+						  select new StudentDTO
+						  {
+							  Name = ct.Name,
+							  SSN = ct.SSN
+						  }).ToList();
+			return result;
+		}
+		#endregion
+
+		#region GetStudents in waitinglist
+		/// <summary>
+		/// Get all students on waitinglist
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns>List of all students </returns>
+		public List<StudentDTO> GetWaitinglist(int id)
+		{
+			var course = _db.Courses.SingleOrDefault(x => x.ID == id);
+			if (course == null)
+			{
+				throw new AppObjectNotFoundException();
+			}
+			var result = (from c in _db.WaitingLists
 						  where c.ID == id
 						  join ct in _db.Persons on c.PersonID equals ct.ID
 						  select new StudentDTO
