@@ -46,5 +46,11 @@ namespace API.Services.Entities
 		/// </summary>
 		[Required]
 		public string Semester { get; set; }
+
+		/// <summary>
+		/// Maximum amount of students that are 
+		/// </summary>
+		[Required]
+		public int MaxStudents { get; set; }
 	}
 }

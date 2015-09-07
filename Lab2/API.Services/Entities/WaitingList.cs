@@ -7,34 +7,23 @@ using System.Threading.Tasks;
 
 namespace API.Services.Entities
 {
-	/// <summary>
-	/// Assign a person to Course
-	/// </summary>
-	class CourseStudent
+	class WaitingList
 	{
 		/// <summary>
-		/// Unique Identifyer
+		/// Unique identifier
 		/// </summary>
 		public int ID { get; set; }
 
 		/// <summary>
-		/// Id of the course
+		/// Id of the course that a student is on the waiting list for
 		/// </summary>
 		[Required]
 		public int CourseID { get; set; }
 
 		/// <summary>
-		/// Id of the person
+		/// Id of student that is on the waiting list
 		/// </summary>
 		[Required]
 		public int PersonID { get; set; }
-
-		/// <summary>
-		/// 1 if student is active in the course
-		/// 0 if student is not in the course anymore
-		/// </summary>
-		[Required]
-		public int Active { get; set; }
-
 	}
 }

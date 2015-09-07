@@ -42,7 +42,7 @@ namespace API.Services
 							  ID           = c.ID,
 							  StartDate    = c.StartDate,
 							  Name         = ct.Name,
-							  StudentCount = 0 // TODO!!!
+							  StudentCount = NumberStudentsCourse(c.ID)
 						 }).ToList();
 
 			return result;
@@ -57,7 +57,7 @@ namespace API.Services
 		/// </summary>
 		/// <param name="id">Id of the course</param>
 		/// <param name="model">SSN and Name</param>
-		public void AddStudentToCourse(int id, AddStudentViewModel model)
+		public StudentDTO AddStudentToCourse(int id, AddStudentViewModel model)
 		{
 
 			var course = _db.Courses.SingleOrDefault(x => x.ID == id);
@@ -66,17 +66,52 @@ namespace API.Services
 				// if course cannot be found
 				throw new AppObjectNotFoundException();
 			}
-			// TODO: Validate that the person exists
+			// Checking if the person is exists
 			var person = _db.Persons.SingleOrDefault(x => x.SSN == model.SSN);
 			if (person == null)
 			{
 				throw new AppPersonNotFoundException();
+			}
+			var ret = new StudentDTO();
+			ret.SSN = person.SSN;
+			ret.Name = person.Name;
+
+			//Checking if maximum number of student in course has been reached
+			var studentsInCourse = NumberStudentsCourse(course.ID);
+			if (studentsInCourse > course.MaxStudents)
+			{
+				throw new MaxStudentsException();
+			}
+			//Removing student from waiting list
+			var alreadyInCourse = _db.CourseStudents.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
+			if (alreadyInCourse != null)
+			{
+				//If student is already in course but not active
+				if (alreadyInCourse.Active == 0)
+				{
+					alreadyInCourse.Active = 1;
+					_db.CourseStudents.Remove(alreadyInCourse);
+					_db.CourseStudents.Add(alreadyInCourse);
+					_db.SaveChanges();
+				}
+				else
+				{
+					throw new AppObjectNotFoundException();
+				}
+				return ret;
+			}
+			var waiting = _db.WaitingLists.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
+			if (waiting != null)
+			{
+				_db.WaitingLists.Remove(waiting);
+				_db.SaveChanges();
 			}
 			var adding = new CourseStudent();
 			adding.CourseID = course.ID;
 			adding.PersonID = person.ID;
 			_db.CourseStudents.Add(adding);
 			_db.SaveChanges();
+			return ret;
 		}
 		#endregion
 
@@ -183,8 +218,103 @@ namespace API.Services
 						}).ToList();
 			return res;
 
-		} 
+		}
 		#endregion
 
+		#region Number of students in course
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id">Id of the course</param>
+		/// <returns></returns>
+		public int NumberStudentsCourse(int id)
+		{
+			var course = _db.Courses.SingleOrDefault(x => x.ID == id);
+			if (course == null)
+			{
+				throw new AppObjectNotFoundException();
+			}
+			var num = _db.CourseStudents.Where(x => x.Active == 1).Count();
+			return num;
+		}
+		#endregion
+
+
+		#region Delete student from course
+		/// <summary>
+		/// Remove student from course
+		/// </summary>
+		/// <param name="courseId">Id of the course</param>
+		/// <param name="ssn">ssn of the student</param>
+		public void RemoveStudentFromCourse(int courseId, string ssn)
+		{
+			var course = _db.Courses.SingleOrDefault(x => x.ID == courseId);
+			if (course == null)
+			{
+				throw new AppObjectNotFoundException();
+			}
+			var person = _db.Persons.SingleOrDefault(x => x.SSN == ssn);
+			if (person == null)
+			{
+				throw new AppObjectNotFoundException();
+			}
+			var courseStudent = _db.CourseStudents.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
+			courseStudent.Active = 0;
+			//TODO:now active should be 0 but check to be sure !!!!
+			//possible solution is to remove record and add it again with the correct value
+			_db.SaveChanges();
+		}
+		#endregion
+
+		#region add student to waiting list
+		/// <summary>
+		/// Adding student to waitinglist
+		/// throws AppObjectNotFound if course or person does not exist
+		/// </summary>
+		/// <param name="courseID">Id of the course</param>
+		/// <param name="SSN">SSN of the student</param>
+		public void AddStudentToWaitingList(int courseID, string SSN)
+		{
+			var course = _db.Courses.SingleOrDefault(x => x.ID == courseID);
+			var person = _db.Persons.SingleOrDefault(x => x.SSN == SSN);
+			if (course == null || person == null)
+			{
+				throw new AppObjectNotFoundException();
+			}
+			var isPersonInCourse = _db.CourseStudents.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
+			var personInWaitingList = _db.WaitingLists.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
+			if (isPersonInCourse != null || personInWaitingList != null)
+			{
+				throw new WaitingListException();
+			}
+
+		}
+		#endregion
+
+		#region GetAllActiveStudents
+		/// <summary>
+		/// Gets all active students in course
+		/// throws AppObjectNotFound if course doesn't Exist
+		/// </summary>
+		/// <param name="id">Id of the course</param>
+		/// <returns>Returns list of all active students in course</returns>
+		public List<StudentDTO> GetActiveStudents(int id)
+		{
+			var course = _db.Courses.SingleOrDefault(x => x.ID == id);
+			if (course == null)
+			{
+				throw new AppObjectNotFoundException();
+			}
+			var result = (from c in _db.CourseStudents
+						  where c.ID == id
+						  join ct in _db.Persons on c.PersonID equals ct.ID
+						  select new StudentDTO
+						  {
+							  Name = ct.Name,
+							  SSN = ct.SSN
+						  }).ToList();
+			return result;
+		} 
+		#endregion
 	}
 }
