@@ -1,6 +1,7 @@
 ﻿using API.Models;
 using API.Services.Repositories;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using API.Models.Courses.Students;
 using System.Diagnostics;
@@ -312,7 +313,7 @@ namespace API.Services
 				throw new AppObjectNotFoundException();
 			}
 			var result = (from c in _db.CourseStudents
-						  where c.ID == id
+						  where c.ID == id && c.Active == 1
 						  join ct in _db.Persons on c.PersonID equals ct.ID
 						  select new StudentDTO
 						  {
