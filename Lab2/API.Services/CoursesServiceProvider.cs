@@ -94,8 +94,6 @@ namespace API.Services
 				if (alreadyInCourse.Active == 0)
 				{
 					alreadyInCourse.Active = 1;
-					_db.CourseStudents.Remove(alreadyInCourse);
-					_db.CourseStudents.Add(alreadyInCourse);
 					_db.SaveChanges();
 				}
 				else
@@ -338,7 +336,7 @@ namespace API.Services
 				throw new AppObjectNotFoundException();
 			}
 			var result = (from c in _db.WaitingLists
-						  where c.ID == id
+						  where c.CourseID == id
 						  join ct in _db.Persons on c.PersonID equals ct.ID
 						  select new StudentDTO
 						  {
