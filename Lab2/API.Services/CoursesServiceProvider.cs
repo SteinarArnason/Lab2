@@ -292,6 +292,13 @@ namespace API.Services
 			{
 				throw new WaitingListException();
 			}
+			_db.WaitingLists.Add(new WaitingList
+			{
+				CourseID = course.ID,
+				PersonID = person.ID
+
+			});
+			_db.SaveChanges();
 
 		}
 		#endregion
