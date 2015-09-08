@@ -241,7 +241,6 @@ namespace API.Services
 		}
 		#endregion
 
-
 		#region Delete student from course
 		/// <summary>
 		/// Remove student from course
@@ -268,7 +267,7 @@ namespace API.Services
 		}
 		#endregion
 
-		#region add student to waiting list
+		#region Add student to waiting list
 		/// <summary>
 		/// Adding student to waitinglist
 		/// throws AppObjectNotFound if course or person does not exist
@@ -293,7 +292,7 @@ namespace API.Services
 		}
 		#endregion
 
-		#region GetAllActiveStudents
+		#region Get all active students
 		/// <summary>
 		/// Gets all active students in course
 		/// throws AppObjectNotFound if course doesn't Exist
@@ -319,7 +318,7 @@ namespace API.Services
 		}
 		#endregion
 
-		#region GetStudents in waitinglist
+		#region Get students in waiting list
 		/// <summary>
 		/// Get all students on waitinglist
 		/// </summary>
@@ -341,9 +340,10 @@ namespace API.Services
 							  SSN = ct.SSN
 						  }).ToList();
 			return result;
-		} 
+		}
 		#endregion
 
+		#region Add a course
 		public CourseDetailsDTO AddCourse(CourseViewModel c)
 		{
 			var addCourse = new Course
@@ -367,7 +367,7 @@ namespace API.Services
 				StudentCount = 0
 			};
 			return ret;
-
 		}
+		#endregion
 	}
 }

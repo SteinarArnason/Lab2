@@ -27,6 +27,7 @@ namespace Lab2.Controllers
 			_service = new CoursesServiceProvider();
 		}
 
+		#region GET - Courses
 		/// <summary>
 		/// Gets courses based on semester
 		/// </summary>
@@ -38,7 +39,9 @@ namespace Lab2.Controllers
 		{
 			return _service.GetCoursesBySemester(semester);
 		}
+		#endregion
 
+		#region POST - Add course
 		/// <summary>
 		/// Add a course
 		/// </summary>
@@ -49,9 +52,22 @@ namespace Lab2.Controllers
 		public IHttpActionResult addCourse(CourseViewModel c)
 		{
 			//Todo: The "Location" header should be set (it will be used to construct the subsequent requests!)
-			return Content(HttpStatusCode.Created, _service.AddCourse(c));
+			//return Content(HttpStatusCode.Created, _service.AddCourse(c));
+			if (ModelState.IsValid)
+			{
+				var result = _service.AddCourse(c);
+				string location = Url.Link("byID", new { id = result.ID });
+				return Created(location, result);
+			}
+			else
+			{
+				return StatusCode(HttpStatusCode.PreconditionFailed);
+			}
+			
 		}
+		#endregion
 
+		#region POST - Add student to course
 		/// <summary>
 		/// Adds a student to a given course
 		/// If course does not exist it returns 404
@@ -61,7 +77,7 @@ namespace Lab2.Controllers
 		/// <param name="model">Student we're adding to the course</param>
 		/// <returns>Created(201)</returns>
 		[HttpPost]
-		[Route("{id}/students")]
+		[Route("{id}")]
 		public IHttpActionResult AddStudentToCourse(int id, AddStudentViewModel model)
 		{
 			if (ModelState.IsValid)
@@ -85,7 +101,9 @@ namespace Lab2.Controllers
 				return StatusCode(HttpStatusCode.PreconditionFailed);
 			}
 		}
+		#endregion
 
+		#region GET - Get course by ID
 		/// <summary>
 		/// Gets a given course by its' ID returning a more detailed object
 		/// about the course, if no course found returns 404
@@ -93,7 +111,7 @@ namespace Lab2.Controllers
 		/// <param name="id">ID of the course</param>
 		/// <returns>The course we asked for</returns>
 		[HttpGet]
-		[Route("{id}")]
+		[Route("{id}", Name="byID")]
 		public IHttpActionResult GetCourseByID(int id)
 		{
 			try
@@ -106,7 +124,9 @@ namespace Lab2.Controllers
 				return NotFound();
 			}
 		}
+		#endregion
 
+		#region PUT - Update course by ID
 		/// <summary>
 		/// Updates a course, if no course found returns 404
 		/// </summary>
@@ -138,7 +158,9 @@ namespace Lab2.Controllers
 				return StatusCode(HttpStatusCode.PreconditionFailed);
 			}
 		}
+		#endregion
 
+		#region DELETE - Deletes course by ID
 		/// <summary>
 		/// Deletes the given course, if no course found returns 404
 		/// </summary>
@@ -158,7 +180,9 @@ namespace Lab2.Controllers
 				return NotFound();
 			}
 		}
+		#endregion
 
+		#region GET - Students in course
 		/// <summary>
 		/// Gets all the students from the course, if no course found returns 404
 		/// </summary>
@@ -178,6 +202,7 @@ namespace Lab2.Controllers
 
 			}
 		}
+		#endregion
 
 
 	}
