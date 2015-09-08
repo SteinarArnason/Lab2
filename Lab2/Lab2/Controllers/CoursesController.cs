@@ -19,6 +19,7 @@ namespace Lab2.Controllers
     {
 		private readonly CoursesServiceProvider _service;
 
+		#region Constructor
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -26,6 +27,7 @@ namespace Lab2.Controllers
 		{
 			_service = new CoursesServiceProvider();
 		}
+		#endregion
 
 		#region GET - Courses
 		/// <summary>
@@ -51,8 +53,6 @@ namespace Lab2.Controllers
 		[Route("")]
 		public IHttpActionResult addCourse(CourseViewModel c)
 		{
-			//Todo: The "Location" header should be set (it will be used to construct the subsequent requests!)
-			//return Content(HttpStatusCode.Created, _service.AddCourse(c));
 			if (ModelState.IsValid)
 			{
 				var result = _service.AddCourse(c);
@@ -261,9 +261,13 @@ namespace Lab2.Controllers
 				_service.AddStudentToWaitingList(id, model.SSN);
 				return Ok();
 			}
+			catch (AlreadyRegisteredException)
+			{
+				return StatusCode(HttpStatusCode.PreconditionFailed);
+			}
 			catch (WaitingListException)
 			{
-				return NotFound();
+				return StatusCode(HttpStatusCode.PreconditionFailed);
 			}
 			catch (AppObjectNotFoundException)
 			{
