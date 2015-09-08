@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace API.Models
+﻿namespace API.Models.Courses.Students
 {
 	/// <summary>
 	/// Represents a student in a list of students

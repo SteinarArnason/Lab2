@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace API.Models
+namespace API.Models.Courses
 {
 	/// <summary>
 	/// Represents a course in a list of courses

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace API.Models
+namespace API.Models.Courses
 {
 	/// <summary>
 	/// Represents a single course which includes more details
