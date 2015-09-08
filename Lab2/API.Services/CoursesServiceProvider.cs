@@ -81,7 +81,7 @@ namespace API.Services
 
 			//Checking if maximum number of student in course has been reached
 			var studentsInCourse = NumberStudentsCourse(course.ID);
-			if (studentsInCourse > course.MaxStudents)
+			if (studentsInCourse >= course.MaxStudents)
 			{
 				throw new MaxStudentsException();
 			}
@@ -99,7 +99,7 @@ namespace API.Services
 				}
 				else
 				{
-					throw new AppObjectNotFoundException();
+					throw new AlreadyRegisteredException();
 				}
 				return ret;
 			}
