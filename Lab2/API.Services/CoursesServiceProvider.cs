@@ -1,7 +1,6 @@
 ﻿using API.Models;
 using API.Services.Repositories;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using API.Models.Courses.Students;
 using System.Diagnostics;
@@ -13,12 +12,14 @@ namespace API.Services
 {
 	public class CoursesServiceProvider
 	{
+		#region Constructor and private variables
 		private readonly AppDataContext _db;
 
 		public CoursesServiceProvider()
 		{
 			_db = new AppDataContext();
 		}
+		#endregion
 
 		#region Get Courses by semester
 		/// <summary>
@@ -32,9 +33,6 @@ namespace API.Services
 			{
 				semester = "20153";
 			}
-
-			//TODO finna alla áfanga sem tilheyra þessarri önn
-			//var result = _db.Courses.Where(x => x.Semester == semester).toList(); jafngilt næstu skipun
 			var result = (from c in _db.Courses
 						  join ct in _db.CourseTemplates on c.TemplateID equals ct.TemplateID
 						  where c.Semester == semester
@@ -95,7 +93,7 @@ namespace API.Services
 				{
 					alreadyInCourse.Active = 1;
 					_db.SaveChanges();
-					removeFromWaitingList(alreadyInCourse.CourseID, alreadyInCourse.PersonID);
+					RemoveFromWaitingList(alreadyInCourse.CourseID, alreadyInCourse.PersonID);
 					return new StudentDTO
 					{
 						Name = person.Name,
@@ -106,9 +104,8 @@ namespace API.Services
 				{
 					throw new AlreadyRegisteredException();
 				}
-				return ret;
 			}
-			removeFromWaitingList(course.ID, person.ID);
+			RemoveFromWaitingList(course.ID, person.ID);
 			var adding = new CourseStudent();
 			adding.CourseID  = course.ID;
 			adding.PersonID  = person.ID;
@@ -118,12 +115,14 @@ namespace API.Services
 			return ret;
 		}
 		#endregion
+
+		#region Private remove student from waitinglist that Add Student to Course Uses
 		/// <summary>
 		/// Removing student from waitinglist 
 		/// </summary>
 		/// <param name="courseID">ID of course</param>
 		/// <param name="personID">ID of person</param>
-		private void removeFromWaitingList(int courseID, int personID)
+		private void RemoveFromWaitingList(int courseID, int personID)
 		{
 			var waiting = _db.WaitingLists.SingleOrDefault(x => x.CourseID == courseID && x.PersonID == personID);
 			if (waiting != null)
@@ -132,6 +131,7 @@ namespace API.Services
 				_db.SaveChanges();
 			}
 		}
+		#endregion
 
 		#region Get Course by ID
 		/// <summary>
@@ -241,7 +241,7 @@ namespace API.Services
 
 		#region Number of students in course
 		/// <summary>
-		/// 
+		/// Gets the number of students in course
 		/// </summary>
 		/// <param name="id">Id of the course</param>
 		/// <returns>Returns number of students in course</returns>
@@ -301,7 +301,7 @@ namespace API.Services
 			{
 				throw new AppObjectNotFoundException();
 			}
-			var isPersonInCourse = _db.CourseStudents.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
+			var isPersonInCourse    = _db.CourseStudents.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
 			var personInWaitingList = _db.WaitingLists.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
 			if (personInWaitingList != null)
 			{
@@ -355,7 +355,7 @@ namespace API.Services
 		/// <summary>
 		/// Get all students on waitinglist
 		/// </summary>
-		/// <param name="id"></param>
+		/// <param name="id">Id of the course</param>
 		/// <returns>List of all students </returns>
 		public List<StudentDTO> GetWaitinglist(int id)
 		{
@@ -378,10 +378,10 @@ namespace API.Services
 
 		#region Add a course
 		/// <summary>
-		/// 
+		/// Adds new course to the Database
 		/// </summary>
-		/// <param name="c"></param>
-		/// <returns></returns>
+		/// <param name="c">The course you want to create</param>
+		/// <returns>Returns CourseDetailsDTO of the newly created course</returns>
 		public CourseDetailsDTO AddCourse(CourseViewModel c)
 		{
 			var addCourse = new Course
