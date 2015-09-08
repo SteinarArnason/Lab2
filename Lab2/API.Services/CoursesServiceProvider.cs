@@ -288,7 +288,7 @@ namespace API.Services
 			}
 			var isPersonInCourse = _db.CourseStudents.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
 			var personInWaitingList = _db.WaitingLists.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
-			if (isPersonInCourse != null || personInWaitingList != null)
+			if (isPersonInCourse.Active == 1 || personInWaitingList != null)
 			{
 				throw new WaitingListException();
 			}
@@ -348,6 +348,11 @@ namespace API.Services
 		#endregion
 
 		#region Add a course
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="c"></param>
+		/// <returns></returns>
 		public CourseDetailsDTO AddCourse(CourseViewModel c)
 		{
 			var addCourse = new Course
