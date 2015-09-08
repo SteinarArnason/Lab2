@@ -77,7 +77,7 @@ namespace Lab2.Controllers
 		/// <param name="model">Student we're adding to the course</param>
 		/// <returns>Created(201)</returns>
 		[HttpPost]
-		[Route("{id}")]
+		[Route("{id}/students")]
 		public IHttpActionResult AddStudentToCourse(int id, AddStudentViewModel model)
 		{
 			if (ModelState.IsValid)
@@ -94,6 +94,10 @@ namespace Lab2.Controllers
 				catch (AppPersonNotFoundException)
 				{
 					return NotFound();
+				}
+				catch (MaxStudentsException)
+				{
+					return StatusCode(HttpStatusCode.PreconditionFailed);
 				}
 			}
 			else
