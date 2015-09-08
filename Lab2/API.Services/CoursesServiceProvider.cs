@@ -305,7 +305,7 @@ namespace API.Services
 			var personInWaitingList = _db.WaitingLists.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
 			if (personInWaitingList != null)
 			{
-				throw new WaitingListException();
+				throw new AlreadyRegisteredException();
 			}
 			if (isPersonInCourse != null)
 			{
