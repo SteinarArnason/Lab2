@@ -252,7 +252,7 @@ namespace API.Services
 			{
 				throw new AppObjectNotFoundException();
 			}
-			return _db.CourseStudents.Count(x => x.CourseID == course.ID);
+			return _db.CourseStudents.Count(x => x.CourseID == course.ID && x.Active == 1);
 		}
 		#endregion
 
