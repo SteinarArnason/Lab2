@@ -303,9 +303,16 @@ namespace API.Services
 			}
 			var isPersonInCourse = _db.CourseStudents.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
 			var personInWaitingList = _db.WaitingLists.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
-			if (isPersonInCourse.Active == 1 || personInWaitingList != null)
+			if (personInWaitingList != null)
 			{
 				throw new WaitingListException();
+			}
+			if (isPersonInCourse != null)
+			{
+				if (isPersonInCourse.Active == 1)
+				{
+					throw new WaitingListException();
+				}
 			}
 			_db.WaitingLists.Add(new WaitingList
 			{
