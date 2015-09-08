@@ -110,8 +110,9 @@ namespace API.Services
 				_db.SaveChanges();
 			}
 			var adding = new CourseStudent();
-			adding.CourseID = course.ID;
-			adding.PersonID = person.ID;
+			adding.CourseID  = course.ID;
+			adding.PersonID  = person.ID;
+			adding.Active    = 1;
 			_db.CourseStudents.Add(adding);
 			_db.SaveChanges();
 			return ret;
