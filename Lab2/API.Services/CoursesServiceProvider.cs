@@ -258,9 +258,13 @@ namespace API.Services
 			var person = _db.Persons.SingleOrDefault(x => x.SSN == ssn);
 			if (person == null)
 			{
-				throw new AppObjectNotFoundException();
+				throw new AppPersonNotFoundException();
 			}
 			var courseStudent = _db.CourseStudents.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
+			if (courseStudent == null)
+			{
+				throw new NotEnrolledInClassException();
+			}
 			courseStudent.Active = 0;
 			//TODO:now active should be 0 but check to be sure !!!!
 			//possible solution is to remove record and add it again with the correct value
