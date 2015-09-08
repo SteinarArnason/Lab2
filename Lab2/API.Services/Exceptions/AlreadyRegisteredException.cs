@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Services.Exceptions
 {
-	class AlreadyRegisteredException
+	public class AlreadyRegisteredException : ApplicationException
 	{
 	}
 }

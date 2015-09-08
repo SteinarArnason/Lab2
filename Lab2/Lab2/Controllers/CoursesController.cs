@@ -95,6 +95,10 @@ namespace Lab2.Controllers
 				{
 					return NotFound();
 				}
+				catch (AlreadyRegisteredException)
+				{
+					return StatusCode(HttpStatusCode.PreconditionFailed);
+				}
 				catch (MaxStudentsException)
 				{
 					return StatusCode(HttpStatusCode.PreconditionFailed);
