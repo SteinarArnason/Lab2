@@ -343,5 +343,31 @@ namespace API.Services
 			return result;
 		} 
 		#endregion
+
+		public CourseDetailsDTO AddCourse(CourseViewModel c)
+		{
+			var addCourse = new Course
+			{
+				MaxStudents = c.MaxStudents,
+				StartDate = c.StartDate,
+				EndDate = c.EndDate,
+				Semester = c.Semester,
+				TemplateID = c.TemplateID,
+			};
+			_db.Courses.Add(addCourse);
+			_db.SaveChanges();
+			var getCourse = _db.Courses.SingleOrDefault(x => x.ID == addCourse.ID);
+			var ret = new CourseDetailsDTO
+			{
+				EndDate = getCourse.EndDate,
+				ID = getCourse.ID,
+				Name = _db.CourseTemplates.SingleOrDefault(x => x.TemplateID == getCourse.TemplateID).Name,
+				Semester = getCourse.Semester,
+				StartDate = getCourse.StartDate,
+				StudentCount = 0
+			};
+			return ret;
+
+		}
 	}
 }

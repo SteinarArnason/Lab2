@@ -1,0 +1,48 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace API.Models.Courses
+{
+	/// <summary>
+	/// Sending in a new course (create)
+	/// </summary>
+	public class CourseViewModel
+	{
+		/// <summary>
+		/// Identifies the template for the course
+		/// Example: "T-514-VEFT"
+		/// </summary>
+		[Required]
+		public string TemplateID { get; set; }
+
+		/// <summary>
+		/// Date at which the course starts
+		/// Example: "17. 08. 2015"
+		/// </summary>
+		public DateTime StartDate { get; set; }
+
+		/// <summary>
+		/// Date at which the course ends
+		/// Example: "17. 08. 2015"
+		/// </summary>
+		public DateTime EndDate { get; set; }
+
+		/// <summary>
+		/// Specifies when the course is taught
+		/// Specified by year followed by which part of the year it is
+		/// Example: "20151" stands for 2015 spring
+		/// Example: "20152" stands for 2015 summer
+		/// Example: "20151" stands for 2015 fall
+		/// </summary>
+		[Required]
+		public string Semester { get; set; }
+
+		/// <summary>
+		/// Maximum amount of students that are 
+		/// </summary>
+		[Required]
+		public int MaxStudents { get; set; }
+		
+
+    }
+}

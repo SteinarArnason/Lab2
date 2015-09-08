@@ -38,7 +38,20 @@ namespace Lab2.Controllers
 		{
 			return _service.GetCoursesBySemester(semester);
 		}
-		
+
+		/// <summary>
+		/// Add a course
+		/// </summary>
+		/// <param name="c">Course view model</param>
+		/// <returns>201 if success and the newly created course</returns>
+		[HttpPost]
+		[Route("")]
+		public IHttpActionResult addCourse(CourseViewModel c)
+		{
+			//Todo: The "Location" header should be set (it will be used to construct the subsequent requests!)
+			return Content(HttpStatusCode.Created, _service.AddCourse(c));
+		}
+
 		/// <summary>
 		/// Adds a student to a given course
 		/// If course does not exist it returns 404
@@ -64,7 +77,7 @@ namespace Lab2.Controllers
 				}
 				catch (AppPersonNotFoundException)
 				{
-					return StatusCode(HttpStatusCode.PreconditionFailed);
+					return NotFound();
 				}
 			}
 			else

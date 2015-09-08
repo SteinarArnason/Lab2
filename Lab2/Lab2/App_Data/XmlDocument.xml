@@ -498,6 +498,13 @@
             <param name="semester">specific semester (null is default value)</param>
             <returns>A list of courses</returns>
         </member>
+        <member name="M:Lab2.Controllers.CoursesController.addCourse(API.Models.Courses.CourseViewModel)">
+            <summary>
+            Add a course
+            </summary>
+            <param name="c">Course view model</param>
+            <returns>201 if success and the newly created course</returns>
+        </member>
         <member name="M:Lab2.Controllers.CoursesController.AddStudentToCourse(System.Int32,API.Models.Courses.Students.AddStudentViewModel)">
             <summary>
             Adds a student to a given course
