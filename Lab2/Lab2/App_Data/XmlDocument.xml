@@ -470,17 +470,6 @@
             This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
             </summary>
         </member>
-        <member name="T:Lab2.Areas.HelpPage.XmlDocumentationProvider">
-            <summary>
-            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
-            </summary>
-        </member>
-        <member name="M:Lab2.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Lab2.Areas.HelpPage.XmlDocumentationProvider"/> class.
-            </summary>
-            <param name="documentPath">The physical path to XML document.</param>
-        </member>
         <member name="T:Lab2.Controllers.CoursesController">
             <summary>
             Controller for getting and inserting data into the database
@@ -633,6 +622,18 @@
             Social Security Number
             Example = "1234567890"
             </summary>
+        </member>
+        <member name="T:API.Areas.HelpPage.XmlDocumentationProvider">
+            <summary>
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
+            </summary>
+        </member>
+        <member name="M:API.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:API.Areas.HelpPage.XmlDocumentationProvider"/> class.
+            </summary>
+            <param name="documentPath">The physical path to XML document.</param>
+            <param name="alternativeDocPath">The physical path to XML document.</param>
         </member>
     </members>
 </doc>

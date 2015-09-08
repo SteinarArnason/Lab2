@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API.Models</name>
+    </assembly>
+    <members>
+        <member name="T:API.Models.Courses.Students.AddStudentViewModel">
+            <summary>
+            Adds a student to a course
+            </summary>
+        </member>
+        <member name="T:API.Models.Courses.UpdateCourseViewModel">
+            <summary>
+            Updates the startdate and enddate of the course
+            </summary>
+        </member>
+        <member name="T:API.Models.Courses.CourseViewModel">
+            <summary>
+            Sending in a new course (create)
+            </summary>
+        </member>
+        <member name="P:API.Models.Courses.CourseViewModel.TemplateID">
+            <summary>
+            Identifies the template for the course
+            Example: "T-514-VEFT"
+            </summary>
+        </member>
+        <member name="P:API.Models.Courses.CourseViewModel.StartDate">
+            <summary>
+            Date at which the course starts
+            Example: "17. 08. 2015"
+            </summary>
+        </member>
+        <member name="P:API.Models.Courses.CourseViewModel.EndDate">
+            <summary>
+            Date at which the course ends
+            Example: "17. 08. 2015"
+            </summary>
+        </member>
+        <member name="P:API.Models.Courses.CourseViewModel.Semester">
+            <summary>
+            Specifies when the course is taught
+            Specified by year followed by which part of the year it is
+            Example: "20151" stands for 2015 spring
+            Example: "20152" stands for 2015 summer
+            Example: "20151" stands for 2015 fall
+            </summary>
+        </member>
+        <member name="P:API.Models.Courses.CourseViewModel.MaxStudents">
+            <summary>
+            Maximum amount of students that are 
+            </summary>
+        </member>
+        <member name="T:API.Models.CourseDetailsDTO">
+            <summary>
+            Represents a single course which includes more details
+            </summary>
+        </member>
+        <member name="P:API.Models.CourseDetailsDTO.ID">
+            <summary>
+            Database generated unique identifier for the course
+            Example: 12345
+            </summary>
+        </member>
+        <member name="P:API.Models.CourseDetailsDTO.Name">
+            <summary>
+            Name of the course
+            Example: "Vefþjónustur"
+            </summary>
+        </member>
+        <member name="P:API.Models.CourseDetailsDTO.StartDate">
+            <summary>
+            Date when the course starts
+            Example: "17. 08. 2015"
+            </summary>
+        </member>
+        <member name="P:API.Models.CourseDetailsDTO.EndDate">
+            <summary>
+            Date when the course ends
+            Example: "10. 11. 2015"
+            </summary>
+        </member>
+        <member name="P:API.Models.CourseDetailsDTO.Semester">
+            <summary>
+            Specifies when the course is taught
+            Specified by year followed by which part of the year it is
+            Example: "20151" stands for 2015 spring
+            Example: "20152" stands for 2015 summer
+            Example: "20151" stands for 2015 fall
+            </summary>
+        </member>
+        <member name="P:API.Models.CourseDetailsDTO.StudentCount">
+            <summary>
+            Number of students in the course
+            </summary>
+        </member>
+        <member name="T:API.Models.CourseDTO">
+            <summary>
+            Represents a course in a list of courses
+            </summary>
+        </member>
+        <member name="P:API.Models.CourseDTO.ID">
+            <summary>
+            Database generated unique identifier for the course
+            Example: 12345
+            </summary>
+        </member>
+        <member name="P:API.Models.CourseDTO.Name">
+            <summary>
+            Name of the course
+            Example: "Vefþjónustur"
+            </summary>
+        </member>
+        <member name="P:API.Models.CourseDTO.StartDate">
+            <summary>
+            Date when the course starts
+            Example: "17. 08. 2015"
+            </summary>
+        </member>
+        <member name="P:API.Models.CourseDTO.StudentCount">
+            <summary>
+            Number of students in the course
+            </summary>
+        </member>
+        <member name="T:API.Models.StudentDTO">
+            <summary>
+            Represents a student in a list of students
+            </summary>
+        </member>
+        <member name="P:API.Models.StudentDTO.Name">
+            <summary>
+            Name of the student
+            Example: "Alex Viðar Santos"
+            </summary>
+        </member>
+        <member name="P:API.Models.StudentDTO.SSN">
+            <summary>
+            SSN of the student
+            Example: 1234567890
+            </summary>
+        </member>
+    </members>
+</doc>
