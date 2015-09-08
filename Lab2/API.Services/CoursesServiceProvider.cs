@@ -70,7 +70,7 @@ namespace API.Services
 				// if course cannot be found
 				throw new AppObjectNotFoundException();
 			}
-			// Checking if the person is exists
+			// Checking if the person exists
 			var person = _db.Persons.SingleOrDefault(x => x.SSN == model.SSN);
 			if (person == null)
 			{
@@ -95,6 +95,12 @@ namespace API.Services
 				{
 					alreadyInCourse.Active = 1;
 					_db.SaveChanges();
+					removeFromWaitingList(alreadyInCourse.CourseID, alreadyInCourse.PersonID);
+					return new StudentDTO
+					{
+						Name = person.Name,
+						SSN = person.SSN
+					};
 				}
 				else
 				{
@@ -102,12 +108,7 @@ namespace API.Services
 				}
 				return ret;
 			}
-			var waiting = _db.WaitingLists.SingleOrDefault(x => x.CourseID == course.ID && x.PersonID == person.ID);
-			if (waiting != null)
-			{
-				_db.WaitingLists.Remove(waiting);
-				_db.SaveChanges();
-			}
+			removeFromWaitingList(course.ID, person.ID);
 			var adding = new CourseStudent();
 			adding.CourseID  = course.ID;
 			adding.PersonID  = person.ID;
@@ -117,6 +118,20 @@ namespace API.Services
 			return ret;
 		}
 		#endregion
+		/// <summary>
+		/// Removing student from waitinglist 
+		/// </summary>
+		/// <param name="courseID">ID of course</param>
+		/// <param name="personID">ID of person</param>
+		private void removeFromWaitingList(int courseID, int personID)
+		{
+			var waiting = _db.WaitingLists.SingleOrDefault(x => x.CourseID == courseID && x.PersonID == personID);
+			if (waiting != null)
+			{
+				_db.WaitingLists.Remove(waiting);
+				_db.SaveChanges();
+			}
+		}
 
 		#region Get Course by ID
 		/// <summary>
