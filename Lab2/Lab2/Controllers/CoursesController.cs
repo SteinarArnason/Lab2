@@ -190,6 +190,38 @@ namespace Lab2.Controllers
 		}
 		#endregion
 
+		#region DELETE - Delete student from course by SSN
+		/// <summary>
+		/// Deletes a student from a course by SSN, throws appropriate exceptions that apply if an 
+		/// error is encountered.
+		/// </summary>
+		/// <param name="id">ID of the Course</param>
+		/// <param name="ssn">SSN of the Person</param>
+		/// <returns>NoContent(204)</returns>
+		[HttpDelete]
+		[Route("{id}/students/{ssn}")]
+		public IHttpActionResult DeleteStudentFromCourse(int id, string ssn)
+		{
+			try
+			{
+				_service.RemoveStudentFromCourse(id, ssn);
+				return StatusCode(HttpStatusCode.NoContent);
+			}
+			catch (AppPersonNotFoundException)
+			{
+				return NotFound();
+			}
+			catch (AppObjectNotFoundException)
+			{
+				return NotFound();
+			}
+			catch (NotEnrolledInClassException)
+			{
+				return StatusCode(HttpStatusCode.PreconditionFailed);
+			}
+		}
+		#endregion
+
 		#region GET - Students in course
 		/// <summary>
 		/// Gets all the students from the course, if no course found returns 404
@@ -202,7 +234,7 @@ namespace Lab2.Controllers
 		{
 			try
 			{
-				return Ok(_service.GetStudentsInCourse(id));
+				return Ok(_service.GetActiveStudents(id));
 			}
 			catch (AppObjectNotFoundException)
 			{
@@ -212,6 +244,46 @@ namespace Lab2.Controllers
 		}
 		#endregion
 
+		#region POST - Add to waiting list
+		/// <summary>
+		/// Adds a student to a waiting list for a specific course
+		/// Handles custom exceptions in case of error
+		/// </summary>
+		/// <param name="id">ID of the course the waiting list is for</param>
+		/// <param name="model">SSN of the person to be added to the waiting list</param>
+		/// <returns>Ok(200)</returns>
+		[HttpPost]
+		[Route("{id}/waitinglist")]
+		public IHttpActionResult AddToWaitinglist(int id, AddStudentViewModel model)
+		{
+			try
+			{
+				_service.AddStudentToWaitingList(id, model.SSN);
+				return Ok();
+			}
+			catch (WaitingListException)
+			{
+				return NotFound();
+			}
+			catch (AppObjectNotFoundException)
+			{
+				return NotFound();
+			}
+		}
+		#endregion
 
+		#region GET - Get waiting list
+		/// <summary>
+		/// Returns a list of students on the waiting list for the course
+		/// </summary>
+		/// <param name="id">ID of the course</param>
+		/// <returns>List of students</returns>
+		[HttpGet]
+		[Route("{id}/waitinglist")]
+		public IHttpActionResult GetWaitinglist(int id)
+		{
+			return Ok(_service.GetWaitinglist(id));
+		}
+		#endregion
 	}
 }
